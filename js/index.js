@@ -44,39 +44,42 @@ function setModalData(item) {
   
   const divElement = document.createElement('div');
   divElement.setAttribute('id','modal-container');
-  timeline.appendChild(divElement);
-
+  divElement.classList.add('modal');
+  divElement.classList.add('modal-visible');
+ 
   const { title, date, fullDescription, image, summary } = item;
 
   console.log(title)
 
   const timelineItemTitle = document.createElement("h2");
-  timelineItemTitle.setAttribute('id, timeline-item-title');
+  timelineItemTitle.id = 'timeline-item-title';
   timelineItemTitle.classList.add("timeline-item-title");
   timelineItemTitle.textContent = title;
-  timeline.appendChild(timelineItemTitle);
+  divElement.appendChild(timelineItemTitle);
 
   const _more_info = document.createElement("p");
   _more_info.setAttribute("id", "modal_full_description");
   _more_info.textContent = item.fullDescription;
 
-  timeline.appendChild(_more_info);
+  divElement.appendChild(_more_info);
 
   const _modal_image = document.createElement ("img");
   _modal_image.setAttribute('id', 'modal-image');
   _modal_image.setAttribute('src', item.image);
-  timeline.appendChild(_modal_image);
+  divElement.appendChild(_modal_image);
 
   const close = document.createElement('button');
   close.textContent = "close the modal"
-  close.addEvhi
-  entListener('click', ()=> closeModal());
+  close.addEventListener('click', ()=> closeModal(divElement));
+  divElement.appendChild(close);
+
+  timeline.appendChild(divElement);
 }
 
 
 // /(css to open and close modal)
-function closeModal(){
-    container.classList.remove("modal-visible");
+function closeModal(divElement){
+  divElement.classList.remove("modal-visible");
     console.log('closeModal fuction');
 };
 

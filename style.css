@@ -33,9 +33,9 @@ p:nth-child(even):before {
 .modal {
     display: none;
   }
-  .modal-visible {
+  /* .modal-visible {
     display: block;
-  }
+  } */
   
 p:nth-child(odd):before {
   content: counter(section);

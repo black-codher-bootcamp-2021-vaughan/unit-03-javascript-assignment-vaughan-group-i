@@ -2,12 +2,11 @@ import { dates } from "./data.js";
 // console.log(dates)
 const timeline = document.querySelector(".timeline")
 
+dates.map((item) => {
+  console.log("item", item)
+
 // Creating empty div
 const _timeline_item = document.createElement("div");
-
-dates.map((item) => {
-
-
   //giving div a class of timeline item
   _timeline_item.setAttribute("class", "timeline-item");
 
@@ -27,63 +26,65 @@ dates.map((item) => {
   _timeline_item_summary.textContent = item.summary;
   _timeline_item.appendChild(_timeline_item_summary);
 
-  const _timeline_open_modal_button = document.createElement ("button");
-  _timeline_open_modal_button.setAttribute('id', 'modal-close-button');
-  _timeline_open_modal_button.textContent = "click me"
-  console.log("item", item)
-  _timeline_open_modal_button.addEventListener("click", () => setModalData(item));
-  _timeline_item.appendChild(_timeline_open_modal_button);
+  const _timeline_item_more_info = document.createElement ("button");
+  _timeline_item_more_info.setAttribute('class', 'timeline-item-more-info');
+  _timeline_item_more_info.textContent = "click me"
+  _timeline_item_more_info.addEventListener("click", () => setModalData(item));
+  _timeline_item.appendChild(_timeline_item_more_info);
 
   timeline.appendChild(_timeline_item);
 
 });
 
 //Get the modal function
-function setModalData(item) {
-  console.log("set modal data function", item)
-  
-  const divElement = document.createElement('div');
-  divElement.setAttribute('id','modal-container');
-  divElement.classList.add('modal');
-  divElement.classList.add('modal-visible');
- 
-  const { title, date, fullDescription, image, summary } = item;
+function setModalData(item) {  
+  const _modal_container = document.createElement('div');
+  _modal_container.setAttribute('id','modal-container');
+  _modal_container.classList.add('modal');
+  _modal_container.classList.add('modal-visible');
 
-  console.log(title)
+  console.log(item.title);
 
-  const timelineItemTitle = document.createElement("h2");
-  timelineItemTitle.id = 'timeline-item-title';
-  timelineItemTitle.classList.add("timeline-item-title");
-  timelineItemTitle.textContent = title;
-  divElement.appendChild(timelineItemTitle);
+  const _modal_title = document.createElement("h2");
+  _modal_title.setAttribute("id", "modal-title");
 
-  const _more_info = document.createElement("p");
-  _more_info.setAttribute("id", "modal_full_description");
-  _more_info.textContent = item.fullDescription;
+  _modal_title.textContent = item.title;
+  _modal_container.appendChild(_modal_title);
 
-  divElement.appendChild(_more_info);
+  const _modal_date = document.createElement("span")
+  _modal_date.setAttribute("id", "modal-date");
+  _modal_date.textContent = item.date;
+  _modal_container.appendChild(_modal_date);
 
   const _modal_image = document.createElement ("img");
   _modal_image.setAttribute('id', 'modal-image');
   _modal_image.setAttribute('src', item.image);
-  divElement.appendChild(_modal_image);
+  _modal_container.appendChild(_modal_image);
 
-  const close = document.createElement('button');
-  close.textContent = "close the modal"
-  close.addEventListener('click', ()=> closeModal(divElement));
-  divElement.appendChild(close);
+  const _more_info = document.createElement("p");
+  _more_info.setAttribute("id", "modal-full-description");
+  _more_info.classList.add("more-info")
+  _more_info.textContent = item.fullDescription;
+  _modal_container.appendChild(_more_info);
 
-  timeline.appendChild(divElement);
+  const _modal_close = document.createElement('button');
+  _modal_close.setAttribute("id", "modal-close-button");
+  _modal_close.textContent = "close the modal"
+  _modal_close.addEventListener('click', ()=> closeModal(_modal_container));
+  _modal_container.appendChild(_modal_close);
+
+  timeline.appendChild(_modal_container);
 }
 
-
 // /(css to open and close modal)
-function closeModal(divElement){
-  divElement.classList.remove("modal-visible");
-    console.log('closeModal fuction');
+
+function closeModal(_modal_container){
+  _modal_container.classList.remove("modal-visible");
+  console.log('closeModal fuction');
 };
 
 
 // ('#closemodal').click(function() {
 //   ('#modalwindow').modal('hide');
 // });
+
